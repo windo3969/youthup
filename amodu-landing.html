@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>AMODU — 대구 캠퍼스를 밝히다</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@300;400;500;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --pink: #FF2D9B; --violet: #7B4FFF; --blue: #3B82F6;
+  --soft-pink: #FFB3DA; --soft-violet: #C4B5FD;
+  --bg: #0A0A14; --card: #12121F; --text: #F0EEFF; --muted: #8880AA;
+}
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+html { scroll-behavior:smooth; }
+body { background:var(--bg); color:var(--text); font-family:'Noto Sans KR',sans-serif; overflow-x:hidden; -webkit-font-smoothing:antialiased; }
+
+/* NAV */
+nav { position:fixed; top:0; left:0; right:0; z-index:200; display:flex; align-items:center; justify-content:space-between; padding:1rem 1.5rem; backdrop-filter:blur(20px); background:rgba(10,10,20,0.88); border-bottom:1px solid rgba(123,79,255,0.15); }
+.nav-logo { font-family:'Bebas Neue'; font-size:1.5rem; letter-spacing:0.15em; background:linear-gradient(90deg,var(--pink),var(--violet)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.nav-links { display:flex; gap:1.5rem; }
+.nav-links a { color:var(--muted); text-decoration:none; font-size:0.82rem; font-weight:500; transition:color 0.2s; }
+.nav-links a:hover { color:var(--text); }
+.nav-cta { background:linear-gradient(135deg,var(--pink),var(--violet)); color:white; border:none; padding:0.55rem 1.2rem; border-radius:50px; font-size:0.82rem; font-weight:700; cursor:pointer; font-family:'Noto Sans KR',sans-serif; white-space:nowrap; }
+.nav-hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:4px; }
+.nav-hamburger span { display:block; width:22px; height:2px; background:var(--text); border-radius:2px; }
+.mobile-menu { display:none; position:fixed; top:60px; left:0; right:0; z-index:190; background:rgba(10,10,20,0.97); border-bottom:1px solid rgba(123,79,255,0.2); padding:1.5rem; flex-direction:column; gap:1rem; }
+.mobile-menu.open { display:flex; }
+.mobile-menu a { color:var(--text); text-decoration:none; font-size:1rem; font-weight:500; padding:0.5rem 0; border-bottom:1px solid rgba(255,255,255,0.05); }
+
+/* HERO */
+.hero { min-height:100svh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:7rem 1.5rem 5rem; position:relative; overflow:hidden; }
+.hero-bg { position:absolute; inset:0; z-index:0; background: radial-gradient(ellipse 70% 50% at 20% 40%,rgba(255,45,155,0.18) 0%,transparent 70%), radial-gradient(ellipse 60% 60% at 80% 30%,rgba(123,79,255,0.2) 0%,transparent 70%), radial-gradient(ellipse 50% 40% at 50% 80%,rgba(59,130,246,0.1) 0%,transparent 70%); }
+.hero-badge { display:inline-flex; align-items:center; gap:0.5rem; background:rgba(123,79,255,0.15); border:1px solid rgba(123,79,255,0.3); padding:0.4rem 1rem; border-radius:50px; font-size:0.75rem; font-weight:500; letter-spacing:0.06em; color:var(--soft-violet); margin-bottom:1.5rem; animation:fadeUp 0.8s ease both; position:relative; z-index:1; }
+.hero-badge-dot { width:6px; height:6px; border-radius:50%; background:var(--pink); animation:pulse 1.5s infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:0.5;transform:scale(1.5);} }
+.hero-title { font-family:'Bebas Neue'; font-size:clamp(5.5rem,22vw,14rem); letter-spacing:0.05em; line-height:0.9; background:linear-gradient(135deg,#fff 0%,var(--soft-pink) 40%,var(--soft-violet) 80%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; animation:fadeUp 0.8s 0.1s ease both; position:relative; z-index:1; }
+.hero-sub { font-family:'Space Mono',monospace; font-size:clamp(0.65rem,3vw,1rem); color:var(--muted); letter-spacing:0.12em; margin-top:0.6rem; animation:fadeUp 0.8s 0.2s ease both; position:relative; z-index:1; }
+.hero-sub span { color:var(--pink); }
+.hero-desc { max-width:420px; font-size:0.95rem; line-height:1.8; color:rgba(240,238,255,0.7); margin:2rem auto 0; animation:fadeUp 0.8s 0.3s ease both; position:relative; z-index:1; }
+.hero-btns { display:flex; gap:0.8rem; justify-content:center; flex-wrap:wrap; margin-top:2rem; animation:fadeUp 0.8s 0.4s ease both; position:relative; z-index:1; }
+.btn-primary { background:linear-gradient(135deg,var(--pink),var(--violet)); color:white; border:none; padding:0.85rem 2rem; border-radius:50px; font-size:0.95rem; font-weight:700; cursor:pointer; font-family:'Noto Sans KR',sans-serif; transition:transform 0.2s,box-shadow 0.2s; }
+.btn-primary:hover { transform:translateY(-2px); box-shadow:0 10px 30px rgba(255,45,155,0.4); }
+.btn-secondary { background:transparent; color:var(--text); border:1px solid rgba(255,255,255,0.2); padding:0.85rem 2rem; border-radius:50px; font-size:0.95rem; font-weight:500; cursor:pointer; font-family:'Noto Sans KR',sans-serif; transition:border-color 0.2s,background 0.2s; }
+.btn-secondary:hover { border-color:var(--violet); background:rgba(123,79,255,0.1); }
+.hero-scroll { position:absolute; bottom:2rem; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:0.5rem; color:var(--muted); font-size:0.65rem; letter-spacing:0.15em; animation:fadeUp 1s 0.8s ease both; }
+.scroll-line { width:1px; height:36px; background:linear-gradient(to bottom,var(--violet),transparent); animation:scrollDrop 2s infinite; }
+@keyframes scrollDrop { 0%{transform:scaleY(0);transform-origin:top;} 50%{transform:scaleY(1);transform-origin:top;} 51%{transform:scaleY(1);transform-origin:bottom;} 100%{transform:scaleY(0);transform-origin:bottom;} }
+@keyframes fadeUp { from{opacity:0;transform:translateY(24px);} to{opacity:1;transform:translateY(0);} }
+
+/* SHARED */
+.section { padding:5rem 1.5rem; max-width:1100px; margin:0 auto; }
+.section-label { font-family:'Space Mono',monospace; font-size:0.7rem; letter-spacing:0.2em; color:var(--pink); margin-bottom:0.8rem; text-transform:uppercase; }
+.section-title { font-size:clamp(1.8rem,5vw,3rem); font-weight:900; line-height:1.2; margin-bottom:1.2rem; }
+.section-title em { font-style:normal; background:linear-gradient(90deg,var(--pink),var(--violet)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.divider { max-width:1100px; margin:0 auto; height:1px; background:linear-gradient(90deg,transparent,rgba(123,79,255,0.3),transparent); }
+
+/* ABOUT */
+.info-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1rem; margin-top:2.5rem; }
+.info-card { background:var(--card); border:1px solid rgba(123,79,255,0.12); border-radius:20px; padding:1.6rem; transition:border-color 0.3s,transform 0.3s; }
+.info-card:hover { border-color:rgba(255,45,155,0.35); transform:translateY(-4px); }
+.info-icon { font-size:1.8rem; margin-bottom:0.8rem; }
+.info-card-label { font-size:0.68rem; letter-spacing:0.1em; color:var(--pink); margin-bottom:0.4rem; font-weight:700; }
+.info-card h3 { font-size:1rem; font-weight:700; margin-bottom:0.5rem; }
+.info-card p { font-size:0.85rem; color:rgba(240,238,255,0.55); line-height:1.7; }
+
+/* FEATURES */
+.features-section { padding:5rem 1.5rem; background:linear-gradient(180deg,var(--bg) 0%,#0D0A1F 50%,var(--bg) 100%); }
+.features-inner { max-width:1100px; margin:0 auto; }
+.features-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1rem; margin-top:2.5rem; }
+.feature-card { background:var(--card); border-radius:20px; padding:2rem; border:1px solid rgba(255,255,255,0.05); position:relative; overflow:hidden; transition:transform 0.3s; }
+.feature-card:hover { transform:translateY(-5px); }
+.feature-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; }
+.feature-card:nth-child(1)::before { background:linear-gradient(90deg,var(--pink),var(--violet)); }
+.feature-card:nth-child(2)::before { background:linear-gradient(90deg,var(--violet),var(--blue)); }
+.feature-card:nth-child(3)::before { background:linear-gradient(90deg,var(--blue),var(--soft-pink)); }
+.feature-card:nth-child(4)::before { background:linear-gradient(90deg,var(--soft-pink),var(--pink)); }
+.feature-step { font-family:'Bebas Neue'; font-size:3.5rem; line-height:1; opacity:0.07; position:absolute; top:1rem; right:1rem; background:linear-gradient(135deg,var(--pink),var(--violet)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.feature-emoji { font-size:1.8rem; margin-bottom:1rem; }
+.feature-card h3 { font-size:1rem; font-weight:900; margin-bottom:0.6rem; }
+.feature-card p { font-size:0.82rem; color:rgba(240,238,255,0.5); line-height:1.7; }
+
+/* TARGET */
+.target-section { padding:5rem 1.5rem; background:linear-gradient(135deg,rgba(255,45,155,0.04),rgba(123,79,255,0.07)); }
+.target-inner { max-width:1100px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:3rem; align-items:center; }
+.target-visual { background:linear-gradient(135deg,var(--pink),var(--violet)); border-radius:24px; padding:2.5rem; text-align:center; position:relative; overflow:hidden; }
+.target-visual::before { content:'대구'; position:absolute; font-family:'Bebas Neue'; font-size:8rem; opacity:0.08; top:50%; left:50%; transform:translate(-50%,-50%); white-space:nowrap; }
+.target-number { font-family:'Bebas Neue'; font-size:4rem; line-height:1; }
+.target-number-label { font-size:0.9rem; opacity:0.8; margin-top:0.3rem; }
+.target-divider-h { width:60%; height:1px; background:rgba(255,255,255,0.2); margin:1.2rem auto; }
+.target-desc-list { list-style:none; margin-top:1.5rem; }
+.target-desc-list li { padding:0.7rem 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:0.88rem; display:flex; align-items:center; gap:0.6rem; }
+.target-desc-list li:last-child { border-bottom:none; }
+
+/* TEAM BAR */
+.team-section { padding:5rem 1.5rem; max-width:1100px; margin:0 auto; }
+.team-bar { display:flex; align-items:center; gap:1.5rem; background:var(--card); border:1px solid rgba(255,45,155,0.2); border-radius:20px; padding:1.8rem 2rem; margin-top:2.5rem; flex-wrap:wrap; }
+.team-name { font-family:'Bebas Neue'; font-size:2.2rem; letter-spacing:0.1em; background:linear-gradient(135deg,var(--pink),var(--violet)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.team-divider { width:1px; height:2.5rem; background:rgba(255,255,255,0.1); }
+.team-info p { font-size:0.8rem; color:var(--muted); margin-bottom:0.15rem; }
+.team-info strong { color:var(--text); font-size:0.92rem; }
+.team-tags { display:flex; gap:0.5rem; flex-wrap:wrap; margin-left:auto; }
+.tag { padding:0.3rem 0.8rem; border-radius:50px; font-size:0.72rem; font-weight:700; }
+.tag-pink { background:rgba(255,45,155,0.15); color:var(--soft-pink); border:1px solid rgba(255,45,155,0.3); }
+.tag-violet { background:rgba(123,79,255,0.15); color:var(--soft-violet); border:1px solid rgba(123,79,255,0.3); }
+.tag-blue { background:rgba(59,130,246,0.15); color:#93C5FD; border:1px solid rgba(59,130,246,0.3); }
+
+/* ── APP SLIDER ── */
+.app-slider-section { padding:5rem 0; overflow:hidden; position:relative; }
+.app-slider-bg { position:absolute; inset:0; background:radial-gradient(ellipse 80% 60% at 60% 50%,rgba(123,79,255,0.1) 0%,transparent 70%); pointer-events:none; }
+.slider-header { max-width:1100px; margin:0 auto; padding:0 1.5rem 2.5rem; display:flex; align-items:flex-end; justify-content:space-between; flex-wrap:wrap; gap:1rem; }
+.slider-nav-btns { display:flex; gap:0.6rem; }
+.slider-nav-btn { width:44px; height:44px; border-radius:50%; border:1px solid rgba(255,255,255,0.15); background:rgba(255,255,255,0.05); color:var(--text); font-size:1.1rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background 0.2s,border-color 0.2s; }
+.slider-nav-btn:hover { background:rgba(123,79,255,0.2); border-color:var(--violet); }
+.slider-track-wrap { overflow:hidden; padding:0.5rem 0 1rem; }
+.slider-track { display:flex; gap:1.5rem; padding:1rem 1.5rem 1.5rem; transition:transform 0.45s cubic-bezier(0.25,0.46,0.45,0.94); will-change:transform; }
+.slider-dots { display:flex; justify-content:center; gap:0.5rem; margin-top:1.2rem; }
+.slider-dot { width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,0.15); cursor:pointer; transition:background 0.2s,transform 0.2s; }
+.slider-dot.active { background:var(--pink); transform:scale(1.2); }
+
+/* Phone */
+.app-slide { flex-shrink:0; width:240px; }
+.app-slide-phone { width:240px; background:#1A1A2E; border-radius:36px; border:2px solid rgba(255,255,255,0.1); overflow:hidden; box-shadow:0 30px 70px rgba(0,0,0,0.5); transition:transform 0.3s,box-shadow 0.3s; }
+.app-slide-phone:hover { transform:translateY(-8px); box-shadow:0 40px 90px rgba(255,45,155,0.2); }
+.phone-notch { width:80px; height:20px; background:#0A0A14; border-radius:0 0 14px 14px; margin:0 auto; }
+.phone-screen { padding:4px 12px 16px; min-height:390px; }
+.screen-header { display:flex; justify-content:space-between; align-items:center; padding:8px 2px; font-size:0.6rem; color:rgba(255,255,255,0.45); font-family:'Space Mono',monospace; }
+.screen-title { font-family:'Bebas Neue'; font-size:1.5rem; letter-spacing:0.1em; background:linear-gradient(90deg,var(--pink),var(--violet)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; padding:2px 0 8px; }
+.screen-hero-img { width:100%; height:110px; border-radius:14px; background:linear-gradient(135deg,#3B1FA3,#FF2D9B); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; margin-bottom:10px; }
+.screen-hero-big { font-family:'Bebas Neue'; font-size:1.25rem; letter-spacing:0.06em; color:white; }
+.screen-chips { display:flex; gap:5px; flex-wrap:wrap; margin-bottom:8px; }
+.screen-chip { padding:3px 8px; border-radius:20px; font-size:0.52rem; font-weight:700; }
+.chip-pink { background:rgba(255,45,155,0.2); color:var(--soft-pink); border:1px solid rgba(255,45,155,0.3); }
+.chip-violet { background:rgba(123,79,255,0.2); color:var(--soft-violet); border:1px solid rgba(123,79,255,0.3); }
+.chip-blue { background:rgba(59,130,246,0.2); color:#93C5FD; border:1px solid rgba(59,130,246,0.3); }
+.screen-menu-list { display:flex; flex-direction:column; gap:5px; }
+.screen-menu-item { background:rgba(255,255,255,0.05); border-radius:9px; padding:7px 8px; display:flex; align-items:center; gap:7px; font-size:0.58rem; color:rgba(255,255,255,0.8); }
+.menu-icon { width:22px; height:22px; border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:0.7rem; flex-shrink:0; }
+.m1{background:linear-gradient(135deg,var(--pink),var(--violet));} .m2{background:linear-gradient(135deg,var(--violet),var(--blue));} .m3{background:linear-gradient(135deg,var(--blue),#06B6D4);} .m4{background:linear-gradient(135deg,#F59E0B,var(--pink));}
+.menu-text { flex:1; }
+.menu-text-main { font-weight:700; }
+.menu-text-sub { font-size:0.48rem; color:rgba(255,255,255,0.35); }
+.menu-arrow { font-size:0.6rem; color:rgba(255,255,255,0.2); }
+.screen-card { background:rgba(255,255,255,0.05); border-radius:11px; padding:9px; margin-bottom:7px; }
+.screen-card-label { font-size:0.48rem; color:var(--pink); font-weight:700; letter-spacing:0.07em; margin-bottom:3px; }
+.screen-card-title { font-size:0.62rem; font-weight:700; margin-bottom:5px; }
+.screen-progress-bar { height:4px; background:rgba(255,255,255,0.1); border-radius:2px; }
+.screen-progress-fill { height:100%; border-radius:2px; background:linear-gradient(90deg,var(--pink),var(--violet)); }
+.screen-tag-row { display:flex; gap:4px; margin-top:5px; flex-wrap:wrap; }
+.screen-tag { padding:2px 6px; border-radius:10px; font-size:0.46rem; background:rgba(123,79,255,0.2); color:var(--soft-violet); border:1px solid rgba(123,79,255,0.25); }
+.screen-avatar { width:40px; height:40px; border-radius:50%; background:linear-gradient(135deg,var(--pink),var(--violet)); margin:6px auto; display:flex; align-items:center; justify-content:center; font-size:1.1rem; }
+.screen-name { text-align:center; font-size:0.62rem; font-weight:700; margin-bottom:2px; }
+.screen-univ { text-align:center; font-size:0.48rem; color:rgba(255,255,255,0.35); margin-bottom:8px; }
+.screen-stats { display:flex; justify-content:space-around; background:rgba(255,255,255,0.05); border-radius:9px; padding:7px 4px; margin-bottom:7px; }
+.screen-stat { text-align:center; }
+.screen-stat-num { font-size:0.75rem; font-weight:900; }
+.screen-stat-label { font-size:0.42rem; color:rgba(255,255,255,0.35); }
+.screen-radar { width:70px; height:70px; margin:0 auto; }
+.screen-radar svg { width:100%; height:100%; }
+.app-slide-label { text-align:center; margin-top:1.2rem; font-size:0.78rem; font-weight:700; color:rgba(240,238,255,0.6); }
+.app-slide-sublabel { text-align:center; font-size:0.68rem; color:var(--muted); margin-top:0.2rem; }
+
+/* ── PHOTO SLIDER ── */
+.photos-section { padding:5rem 0; background:linear-gradient(180deg,var(--bg) 0%,#0C0B1C 50%,var(--bg) 100%); overflow:hidden; }
+.photo-slide { flex-shrink:0; width:clamp(260px,60vw,380px); height:clamp(200px,40vw,270px); border-radius:20px; overflow:hidden; position:relative; cursor:pointer; border:1.5px solid rgba(255,255,255,0.07); transition:border-color 0.3s,transform 0.3s; background:var(--card); }
+.photo-slide:hover { border-color:rgba(255,45,155,0.3); transform:scale(1.02); }
+.photo-slide img { width:100%; height:100%; object-fit:cover; display:none; }
+.photo-slide img.loaded { display:block; }
+.photo-placeholder { width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0.6rem; color:var(--muted); background:linear-gradient(135deg,rgba(123,79,255,0.06),rgba(255,45,155,0.06)); border:2px dashed rgba(123,79,255,0.2); border-radius:18px; text-align:center; padding:1.5rem; transition:border-color 0.3s,background 0.3s; }
+.photo-placeholder:hover { border-color:rgba(255,45,155,0.4); background:linear-gradient(135deg,rgba(123,79,255,0.1),rgba(255,45,155,0.1)); }
+.ph-icon { font-size:2rem; opacity:0.45; }
+.ph-label { font-size:0.7rem; font-weight:700; letter-spacing:0.1em; color:var(--pink); opacity:0.8; }
+.ph-text { font-size:0.72rem; line-height:1.6; opacity:0.5; }
+
+/* Blur canvas layer — sits above img, below overlay */
+.photo-canvas-wrap {
+  position:absolute; inset:0; pointer-events:none; display:none;
+}
+.photo-canvas-wrap.visible { display:block; }
+.photo-canvas-wrap canvas { width:100%; height:100%; display:block; }
+
+/* Gradient art overlay — creates silhouette feel */
+.photo-art-overlay {
+  position:absolute; inset:0; pointer-events:none;
+  display:none;
+  background:
+    linear-gradient(180deg, rgba(10,10,20,0.15) 0%, rgba(10,10,20,0.0) 30%, rgba(10,10,20,0.0) 60%, rgba(10,10,20,0.45) 100%),
+    linear-gradient(135deg, rgba(123,79,255,0.12) 0%, transparent 60%);
+  mix-blend-mode: multiply;
+}
+.photo-canvas-wrap.visible ~ .photo-art-overlay { display:block; }
+
+/* Bottom editable caption */
+.photo-caption-wrap {
+  position:absolute; bottom:0; left:0; right:0;
+  padding:2rem 1rem 0.9rem;
+  background:linear-gradient(to top, rgba(10,10,20,0.85) 0%, transparent 100%);
+  display:none; flex-direction:column; gap:0.15rem;
+  z-index:4;
+}
+.photo-canvas-wrap.visible ~ .photo-caption-wrap { display:flex; }
+.photo-caption-title {
+  color:white; font-family:'Noto Sans KR',sans-serif;
+  font-size:0.85rem; font-weight:700;
+}
+.photo-caption-desc {
+  color:rgba(255,255,255,0.5); font-family:'Noto Sans KR',sans-serif;
+  font-size:0.7rem;
+}
+
+.photo-upload-overlay { position:absolute; inset:0; display:flex; flex-direction:column; justify-content:flex-end; padding:1rem; opacity:0; transition:opacity 0.3s; pointer-events:none; }
+.photo-slide:hover .photo-upload-overlay { opacity:1; }
+.photo-upload-overlay span { font-size:0.72rem; font-weight:700; color:var(--soft-pink); background:rgba(10,10,20,0.6); display:inline-block; padding:0.3rem 0.7rem; border-radius:20px; }
+.photo-upload-input { position:absolute; inset:0; opacity:0; cursor:pointer; z-index:5; }
+
+/* CTA */
+.cta-section { padding:7rem 1.5rem; text-align:center; position:relative; overflow:hidden; }
+.cta-bg { position:absolute; inset:0; background:radial-gradient(ellipse 80% 60% at 50% 50%,rgba(123,79,255,0.18) 0%,transparent 70%); }
+.cta-section h2 { font-family:'Bebas Neue'; letter-spacing:0.05em; line-height:1; font-size:clamp(2.8rem,10vw,7rem); position:relative; z-index:1; }
+.cta-section p { color:var(--muted); font-size:0.95rem; margin:1.2rem 0 2rem; position:relative; z-index:1; }
+.cta-btns { display:flex; gap:0.8rem; justify-content:center; flex-wrap:wrap; position:relative; z-index:1; }
+
+/* FOOTER */
+footer { border-top:1px solid rgba(255,255,255,0.06); padding:1.8rem 1.5rem; display:flex; justify-content:space-between; align-items:center; color:var(--muted); font-size:0.78rem; flex-wrap:wrap; gap:0.8rem; }
+.footer-logo { font-family:'Bebas Neue'; font-size:1.1rem; letter-spacing:0.15em; background:linear-gradient(90deg,var(--pink),var(--violet)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+
+/* BLOBS */
+.blob { position:fixed; border-radius:50%; filter:blur(80px); pointer-events:none; z-index:-1; animation:blobFloat 8s ease-in-out infinite; }
+.blob-1 { width:350px; height:350px; background:rgba(255,45,155,0.07); top:-80px; left:-80px; }
+.blob-2 { width:300px; height:300px; background:rgba(123,79,255,0.07); bottom:-40px; right:-40px; animation-delay:-4s; }
+@keyframes blobFloat { 0%,100%{transform:translate(0,0) scale(1);} 33%{transform:translate(20px,-15px) scale(1.05);} 66%{transform:translate(-15px,20px) scale(0.95);} }
+
+/* ── MOBILE ── */
+@media (max-width:768px) {
+  .nav-links,.nav-cta { display:none; }
+  .nav-hamburger { display:flex; }
+  nav { padding:1rem 1.2rem; }
+  .hero { padding:6rem 1.2rem 4rem; }
+  .section { padding:4rem 1.2rem; }
+  .section-title { font-size:clamp(1.6rem,6vw,2.2rem); }
+  .info-grid { grid-template-columns:1fr 1fr; gap:0.8rem; }
+  .info-card { padding:1.2rem; }
+  .info-card h3 { font-size:0.9rem; }
+  .features-section { padding:4rem 1.2rem; }
+  .features-grid { grid-template-columns:1fr; gap:0.8rem; }
+  .feature-card { padding:1.5rem; }
+  .target-section { padding:4rem 1.2rem; }
+  .target-inner { grid-template-columns:1fr; gap:2rem; }
+  .target-visual { padding:2rem; }
+  .target-number { font-size:3rem; }
+  .team-section { padding:4rem 1.2rem; }
+  .team-bar { padding:1.2rem; gap:1rem; }
+  .team-divider { display:none; }
+  .team-tags { margin-left:0; }
+  .cta-section { padding:5rem 1.2rem; }
+  footer { flex-direction:column; text-align:center; }
+  .slider-header { padding:0 1.2rem 2rem; }
+  .slider-track { gap:1rem; padding:0.5rem 1.2rem 1rem; }
+}
+@media (max-width:480px) {
+  .info-grid { grid-template-columns:1fr; }
+  .hero-btns,.cta-btns { flex-direction:column; align-items:center; }
+  .app-slide { width:200px; }
+  .app-slide-phone { width:200px; }
+  .phone-screen { min-height:330px; }
+  .photo-slide { width:clamp(220px,75vw,300px); height:clamp(160px,38vw,220px); }
+}
+</style>
+</head>
+<body>
+
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">YOUTHUP</div>
+  <div class="nav-links">
+    <a href="#about">소개</a>
+    <a href="#features">기능</a>
+    <a href="#preview">앱 미리보기</a>
+    <a href="#team-story">팀 스토리</a>
+    <a href="#contact">문의</a>
+  </div>
+  <button class="nav-cta">출시 알림받기</button>
+  <div class="nav-hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" onclick="closeMenu()">소개</a>
+  <a href="#features" onclick="closeMenu()">기능</a>
+  <a href="#preview" onclick="closeMenu()">앱 미리보기</a>
+  <a href="#team-story" onclick="closeMenu()">팀 스토리</a>
+  <a href="#contact" onclick="closeMenu()">문의하기</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-badge"><span class="hero-badge-dot"></span>앱 개발 스타트업 · YOUTHUP</div>
+  <h1 class="hero-title">AMODU</h1>
+  <p class="hero-sub">: All Members Of <span>Daegu</span> University</p>
+  <p class="hero-desc">대구·경북권 대학생활, 지금보다 더 스마트하게.<br>수업·진로·자격증·인간관계를 한 앱에서.</p>
+  <div class="hero-btns">
+    <button class="btn-primary">사전 등록하기</button>
+    <button class="btn-secondary">더 알아보기 ↓</button>
+  </div>
+  <div class="hero-scroll"><span>SCROLL</span><div class="scroll-line"></div></div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="section">
+  <div class="section-label">01. Project Overview</div>
+  <h2 class="section-title">대구 캠퍼스를<br><em>하나로 연결</em>합니다</h2>
+  <p style="color:rgba(240,238,255,0.6);max-width:520px;line-height:1.8;font-size:0.92rem;">아모두(AMODU)는 대구 대학생들을 하나로 연결하는 캠퍼스 허브입니다. 수업 자료와 생활 정보를 공유하며, 학생들이 함께 성장할 수 있는 공간을 제공합니다.</p>
+  <div class="info-grid">
+    <div class="info-card"><div class="info-icon">📱</div><div class="info-card-label">App Name</div><h3>AMODU</h3><p>All Members Of Daegu University — 대구 대학 구성원 모두를 위한 플랫폼</p></div>
+    <div class="info-card"><div class="info-icon">🎯</div><div class="info-card-label">Target Users</div><h3>대구·경북권 대학생</h3><p>재학생부터 졸업생까지 캠퍼스 라이프의 모든 단계를 함께합니다</p></div>
+    <div class="info-card"><div class="info-icon">🤖</div><div class="info-card-label">Core Technology</div><h3>AI 기반 추천</h3><p>AI와 선후배 네트워크를 기반으로 학업·진로까지 이어지는 성장 플랫폼</p></div>
+    <div class="info-card"><div class="info-icon">🚀</div><div class="info-card-label">Goal</div><h3>캠퍼스 라이프 업그레이드</h3><p>대학생활 정보를 통합하고 학업·진로까지 이어지는 성장 플랫폼</p></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FEATURES -->
+<section id="features" class="features-section">
+  <div class="features-inner">
+    <div class="section-label">03. Service Key Features</div>
+    <h2 class="section-title">4단계로 완성되는<br><em>스마트 캠퍼스 라이프</em></h2>
+    <div class="features-grid">
+      <div class="feature-card"><div class="feature-step">01</div><div class="feature-emoji">🔍</div><h3>학교 학과 정보 & 커리큘럼 찾기</h3><p>내 학과의 커리큘럼과 수업 정보를 한눈에 파악하고 효율적인 학업 계획을 세워보세요.</p></div>
+      <div class="feature-card"><div class="feature-step">02</div><div class="feature-emoji">🪪</div><h3>전공별 필요 자격증 & 취업 준비</h3><p>전공에 맞는 자격증 로드맵과 취업 준비 방향을 AI가 맞춤 추천해드립니다.</p></div>
+      <div class="feature-card"><div class="feature-step">03</div><div class="feature-emoji">🤝</div><h3>연애 및 인간관계 팁</h3><p>캠퍼스 생활의 또 다른 축, 인간관계. 선후배 네트워크와 실질적인 관계 팁을 제공합니다.</p></div>
+      <div class="feature-card"><div class="feature-step">04</div><div class="feature-emoji">💎</div><h3>개인 역량 파악 & 직무 적성 검사</h3><p>나에게 맞는 직무와 역량을 분석하여 미래 커리어 방향을 명확하게 설정하세요.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- TARGET -->
+<section class="target-section">
+  <div class="target-inner">
+    <div>
+      <div class="section-label">02. Target Market</div>
+      <h2 class="section-title">대구·경북권<br><em>대학생 전체</em>를<br>타겟합니다</h2>
+      <p style="color:rgba(240,238,255,0.6);line-height:1.8;margin-top:1rem;font-size:0.9rem;">지역 밀착형 서비스로 시작해 전국으로 확장하는 전략을 가지고 있습니다.</p>
+      <ul class="target-desc-list">
+        <li>🏫 대구·경북 소재 대학교 재학생</li>
+        <li>🎓 취업 준비 중인 졸업생</li>
+        <li>🔗 선후배 네트워크가 필요한 모든 세대</li>
+        <li>📍 지역 기반 커뮤니티 활동자</li>
+      </ul>
+    </div>
+    <div class="target-visual">
+      <div class="target-number">20대</div>
+      <div class="target-number-label">핵심 타겟 연령대</div>
+      <div class="target-divider-h"></div>
+      <div class="target-number" style="font-size:2.8rem;">대구·경북</div>
+      <div class="target-number-label">서비스 지역</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TEAM BAR -->
+<section id="team" class="team-section">
+  <div class="section-label">Team</div>
+  <h2 class="section-title">우리는 <em>YOUTHUP</em>입니다</h2>
+  <p style="color:rgba(240,238,255,0.6);max-width:480px;line-height:1.8;font-size:0.9rem;">청년의 에너지로 캠퍼스 문제를 직접 해결하는 앱 개발 스타트업입니다.</p>
+  <div class="team-bar">
+    <div class="team-name">YOUTHUP</div>
+    <div class="team-divider"></div>
+    <div class="team-info"><p>서비스명</p><strong>AMODU (아모두)</strong></div>
+    <div class="team-divider"></div>
+    <div class="team-info"><p>분야</p><strong>캠퍼스 라이프 플랫폼</strong></div>
+    <div class="team-tags">
+      <span class="tag tag-pink">앱 개발</span>
+      <span class="tag tag-violet">AI 서비스</span>
+      <span class="tag tag-blue">EdTech</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- APP PREVIEW SLIDER -->
+<section id="preview" class="app-slider-section">
+  <div class="app-slider-bg"></div>
+  <div class="slider-header">
+    <div>
+      <div class="section-label">App Preview</div>
+      <h2 class="section-title">이런 화면으로<br><em>만나게 됩니다</em></h2>
+    </div>
+    <div class="slider-nav-btns">
+      <button class="slider-nav-btn" onclick="appSlide(-1)">←</button>
+      <button class="slider-nav-btn" onclick="appSlide(1)">→</button>
+    </div>
+  </div>
+  <div class="slider-track-wrap">
+    <div class="slider-track" id="appTrack">
+
+      <!-- Slide 1: Home -->
+      <div class="app-slide">
+        <div class="app-slide-phone">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="screen-header"><span>9:41</span><span>●●●</span></div>
+            <div class="screen-title">AMODU</div>
+            <div class="screen-hero-img">
+              <div class="screen-hero-big">AMODU</div>
+              <div style="font-size:0.5rem;opacity:0.7;color:white;">대구 캠퍼스를 밝히다!</div>
+            </div>
+            <div class="screen-chips">
+              <span class="screen-chip chip-pink">학과정보</span>
+              <span class="screen-chip chip-violet">자격증</span>
+              <span class="screen-chip chip-blue">인간관계</span>
+            </div>
+            <div class="screen-menu-list">
+              <div class="screen-menu-item"><div class="menu-icon m1">🔍</div><div class="menu-text"><div class="menu-text-main">학과 커리큘럼 찾기</div><div class="menu-text-sub">1단계</div></div><span class="menu-arrow">›</span></div>
+              <div class="screen-menu-item"><div class="menu-icon m2">🪪</div><div class="menu-text"><div class="menu-text-main">자격증 &amp; 취업 준비</div><div class="menu-text-sub">2단계</div></div><span class="menu-arrow">›</span></div>
+              <div class="screen-menu-item"><div class="menu-icon m3">🤝</div><div class="menu-text"><div class="menu-text-main">인간관계 &amp; 연애 팁</div><div class="menu-text-sub">3단계</div></div><span class="menu-arrow">›</span></div>
+              <div class="screen-menu-item"><div class="menu-icon m4">💎</div><div class="menu-text"><div class="menu-text-main">역량 &amp; 직무 적성검사</div><div class="menu-text-sub">4단계</div></div><span class="menu-arrow">›</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="app-slide-label">🏠 홈 화면</div>
+        <div class="app-slide-sublabel">4단계 핵심 기능을 한눈에</div>
+      </div>
+
+      <!-- Slide 2: Career -->
+      <div class="app-slide">
+        <div class="app-slide-phone">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="screen-header"><span>진로 준비</span><span>🪪</span></div>
+            <div class="screen-title">CAREER</div>
+            <div class="screen-card">
+              <div class="screen-card-label">STEP 02 · 자격증 로드맵</div>
+              <div class="screen-card-title">정보처리기사</div>
+              <div class="screen-progress-bar"><div class="screen-progress-fill" style="width:65%"></div></div>
+              <div class="screen-tag-row"><span class="screen-tag">전공 추천</span><span class="screen-tag">D-120일</span></div>
+            </div>
+            <div class="screen-card">
+              <div class="screen-card-label">STEP 02 · 취업 준비</div>
+              <div class="screen-card-title">IT 기업 인턴십</div>
+              <div class="screen-progress-bar"><div class="screen-progress-fill" style="width:30%;background:linear-gradient(90deg,#3B82F6,#7B4FFF)"></div></div>
+              <div class="screen-tag-row"><span class="screen-tag">서류 준비 중</span></div>
+            </div>
+            <div class="screen-card">
+              <div class="screen-card-label">AI 추천</div>
+              <div class="screen-card-title">컴퓨터활용능력 1급</div>
+              <div class="screen-progress-bar"><div class="screen-progress-fill" style="width:10%;background:linear-gradient(90deg,#F59E0B,var(--pink))"></div></div>
+              <div class="screen-tag-row"><span class="screen-tag">시작 전</span><span class="screen-tag">추천순위 1위</span></div>
+            </div>
+            <div class="screen-menu-list" style="margin-top:7px">
+              <div class="screen-menu-item"><div class="menu-icon m2">📋</div><div class="menu-text"><div class="menu-text-main">자소서 AI 도우미</div><div class="menu-text-sub">맞춤 작성 가이드</div></div><span class="menu-arrow">›</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="app-slide-label">📈 커리어 화면</div>
+        <div class="app-slide-sublabel">자격증 진행률 & 취업 준비</div>
+      </div>
+
+      <!-- Slide 3: Profile -->
+      <div class="app-slide">
+        <div class="app-slide-phone">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="screen-header"><span>MY 역량</span><span>💎</span></div>
+            <div class="screen-title">PROFILE</div>
+            <div class="screen-avatar">🧑‍💻</div>
+            <div class="screen-name">김아모두</div>
+            <div class="screen-univ">경북대학교 · 컴퓨터공학과 3학년</div>
+            <div class="screen-stats">
+              <div class="screen-stat"><div class="screen-stat-num" style="color:var(--pink)">87</div><div class="screen-stat-label">역량점수</div></div>
+              <div class="screen-stat"><div class="screen-stat-num" style="color:var(--soft-violet)">3개</div><div class="screen-stat-label">자격증</div></div>
+              <div class="screen-stat"><div class="screen-stat-num" style="color:#93C5FD">A+</div><div class="screen-stat-label">적성등급</div></div>
+            </div>
+            <div class="screen-radar">
+              <svg viewBox="0 0 80 80">
+                <polygon points="40,5 70,25 70,55 40,75 10,55 10,25" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+                <polygon points="40,15 60,28 60,52 40,65 20,52 20,28" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+                <polygon points="40,10 65,28 62,54 40,70 18,54 15,28" fill="rgba(123,79,255,0.25)" stroke="rgba(123,79,255,0.6)" stroke-width="1.5"/>
+              </svg>
+            </div>
+            <div class="screen-tag-row" style="justify-content:center;margin-top:4px">
+              <span class="screen-tag">개발</span><span class="screen-tag">기획</span><span class="screen-tag">커뮤니케이션</span>
+            </div>
+          </div>
+        </div>
+        <div class="app-slide-label">💎 프로필 화면</div>
+        <div class="app-slide-sublabel">역량 점수 & 직무 적성 분석</div>
+      </div>
+
+    </div>
+  </div>
+  <div class="slider-dots" id="appDots">
+    <div class="slider-dot active" onclick="appGoTo(0)"></div>
+    <div class="slider-dot" onclick="appGoTo(1)"></div>
+    <div class="slider-dot" onclick="appGoTo(2)"></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TEAM PHOTO SLIDER -->
+<section id="team-story" class="photos-section">
+  <div class="slider-header">
+    <div>
+      <div class="section-label">Team Story</div>
+      <h2 class="section-title">우리가 만들어가는<br><em>AMODU의 순간들</em></h2>
+      <p style="color:rgba(240,238,255,0.6);max-width:380px;line-height:1.8;font-size:0.88rem;margin-top:0.5rem;">팀 YOUTHUP의 회의, 개발, 발표 현장을 담아보세요.</p>
+    </div>
+    <div class="slider-nav-btns">
+      <button class="slider-nav-btn" onclick="photoSlide(-1)">←</button>
+      <button class="slider-nav-btn" onclick="photoSlide(1)">→</button>
+    </div>
+  </div>
+  <div class="slider-track-wrap">
+    <div class="slider-track" id="photoTrack">
+      <div class="photo-slide" id="ps0"><img id="pi0" src="/1.jpg" alt="팀 사진 1"><div class="photo-canvas-wrap" id="pcw0"><canvas id="pc0"></canvas></div><div class="photo-art-overlay"></div><div class="photo-caption-wrap"><div class="photo-caption-title">팀 단체사진</div><div class="photo-caption-desc">YOUTHUP 팀</div></div></div>
+      <div class="photo-slide" id="ps1"><img id="pi1" src="/2.jpg" alt="팀 사진 2"><div class="photo-canvas-wrap" id="pcw1"><canvas id="pc1"></canvas></div><div class="photo-art-overlay"></div><div class="photo-caption-wrap"><div class="photo-caption-title">팀 스터디</div><div class="photo-caption-desc">발표식 스터디로 학습효율을 높임</div></div></div>
+      <div class="photo-slide" id="ps2"><img id="pi2" src="/3.jpg" alt="팀 사진 3"><div class="photo-canvas-wrap" id="pcw2"><canvas id="pc2"></canvas></div><div class="photo-art-overlay"></div><div class="photo-caption-wrap"><div class="photo-caption-title">팀 회의 후</div><div class="photo-caption-desc">회의는 언제나 뿌듯하다</div></div></div>
+      <div class="photo-slide" id="ps3"><img id="pi3" src="/4.jpg" alt="팀 사진 4"><div class="photo-canvas-wrap" id="pcw3"><canvas id="pc3"></canvas></div><div class="photo-art-overlay"></div><div class="photo-caption-wrap"><div class="photo-caption-title">강의</div><div class="photo-caption-desc">외부 강의</div></div></div>
+      <div class="photo-slide" id="ps4"><img id="pi4" src="/5.jpg" alt="팀 사진 5"><div class="photo-canvas-wrap" id="pcw4"><canvas id="pc4"></canvas></div><div class="photo-art-overlay"></div><div class="photo-caption-wrap"><div class="photo-caption-title">토론</div><div class="photo-caption-desc">토론 및 평가</div></div></div>
+    </div>
+  </div>
+  <div class="slider-dots" id="photoDots">
+    <div class="slider-dot active" onclick="photoGoTo(0)"></div>
+    <div class="slider-dot" onclick="photoGoTo(1)"></div>
+    <div class="slider-dot" onclick="photoGoTo(2)"></div>
+    <div class="slider-dot" onclick="photoGoTo(3)"></div>
+    <div class="slider-dot" onclick="photoGoTo(4)"></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="contact" class="cta-section">
+  <div class="cta-bg"></div>
+  <h2>지금 바로<br>함께하세요</h2>
+  <p>AMODU 출시 소식을 가장 먼저 받아보세요</p>
+  <div class="cta-btns">
+    <button class="btn-primary">🔔 출시 알림 신청</button>
+    <button class="btn-secondary">📧 팀에 문의하기</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-logo">YOUTHUP × AMODU</div>
+    <div style="margin-top:0.3rem;font-size:0.72rem;">© 2025 YOUTHUP. All rights reserved.</div>
+  </div>
+  <div style="font-size:0.74rem;text-align:right;">
+    <div>대구·경북권 대학생을 위한 캠퍼스 라이프 플랫폼</div>
+    <div style="margin-top:0.2rem;color:rgba(136,128,170,0.5);">Built with 💜 by YOUTHUP</div>
+  </div>
+</footer>
+
+<script>
+function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open');}
+function closeMenu(){document.getElementById('mobileMenu').classList.remove('open');}
+
+/* ── Generic slider factory ── */
+function makeSlider(trackId, dotsId, total) {
+  let idx = 0;
+  const track = document.getElementById(trackId);
+  const dotsEl = document.getElementById(dotsId);
+  function getSlideW() {
+    const slide = track.querySelector(':scope > *');
+    if (!slide) return 260;
+    return slide.offsetWidth + parseInt(getComputedStyle(track).gap || '24');
+  }
+  function update() {
+    track.style.transform = `translateX(-${idx * getSlideW()}px)`;
+    dotsEl.querySelectorAll('.slider-dot').forEach((d,i) => d.classList.toggle('active', i===idx));
+  }
+  function go(dir) { idx = Math.max(0, Math.min(total-1, idx+dir)); update(); }
+  function goTo(i) { idx = i; update(); }
+  let sx = 0, moved = false;
+  track.addEventListener('touchstart', e=>{ sx=e.touches[0].clientX; moved=false; },{passive:true});
+  track.addEventListener('touchmove', ()=>{ moved=true; },{passive:true});
+  track.addEventListener('touchend', e=>{ if(!moved) return; const dx=sx-e.changedTouches[0].clientX; if(Math.abs(dx)>40) go(dx>0?1:-1); });
+  window.addEventListener('resize', update);
+  return { go, goTo };
+}
+
+const appS   = makeSlider('appTrack',   'appDots',   3);
+const photoS = makeSlider('photoTrack', 'photoDots', 5);
+function appSlide(d)  { appS.go(d);  }
+function appGoTo(i)   { appS.goTo(i);}
+function photoSlide(d){ photoS.go(d);}
+function photoGoTo(i) { photoS.goTo(i);}
+
+/* ── Gaussian blur via canvas ── */
+function gaussianBlur(ctx, w, h, radius) {
+  const passes = 3;
+  for (let p = 0; p < passes; p++) {
+    const data = ctx.getImageData(0, 0, w, h);
+    const src  = new Uint8ClampedArray(data.data);
+    const dst  = data.data;
+    const r    = Math.round(radius);
+    for (let y = 0; y < h; y++) {
+      for (let x = 0; x < w; x++) {
+        let rr=0,gg=0,bb=0,aa=0,cnt=0;
+        for (let kx = -r; kx <= r; kx++) {
+          const nx = Math.max(0, Math.min(w-1, x+kx));
+          const i  = (y*w + nx)*4;
+          rr+=src[i]; gg+=src[i+1]; bb+=src[i+2]; aa+=src[i+3]; cnt++;
+        }
+        const i=(y*w+x)*4;
+        dst[i]=rr/cnt; dst[i+1]=gg/cnt; dst[i+2]=bb/cnt; dst[i+3]=aa/cnt;
+      }
+    }
+    ctx.putImageData(data, 0, 0);
+    const data2 = ctx.getImageData(0, 0, w, h);
+    const src2  = new Uint8ClampedArray(data2.data);
+    const dst2  = data2.data;
+    for (let y = 0; y < h; y++) {
+      for (let x = 0; x < w; x++) {
+        let rr=0,gg=0,bb=0,aa=0,cnt=0;
+        for (let ky = -r; ky <= r; ky++) {
+          const ny = Math.max(0, Math.min(h-1, y+ky));
+          const i  = (ny*w + x)*4;
+          rr+=src2[i]; gg+=src2[i+1]; bb+=src2[i+2]; aa+=src2[i+3]; cnt++;
+        }
+        const i=(y*w+x)*4;
+        dst2[i]=rr/cnt; dst2[i+1]=gg/cnt; dst2[i+2]=bb/cnt; dst2[i+3]=aa/cnt;
+      }
+    }
+    ctx.putImageData(data2, 0, 0);
+  }
+}
+
+function renderBlurredPhoto(img, canvasId, wrapId) {
+  const canvas = document.getElementById(canvasId);
+  const wrap   = document.getElementById(wrapId);
+  const slide  = wrap.parentElement;
+  const W = slide.offsetWidth  || 320;
+  const H = slide.offsetHeight || 220;
+  const scale = 0.35;
+  const sw = Math.round(W * scale);
+  const sh = Math.round(H * scale);
+  canvas.width  = sw;
+  canvas.height = sh;
+  const ctx = canvas.getContext('2d');
+  const ir = img.naturalWidth / img.naturalHeight;
+  const cr = sw / sh;
+  let sx,sy,sW,sH;
+  if (ir > cr) { sH=img.naturalHeight; sW=sH*cr; sx=(img.naturalWidth-sW)/2; sy=0; }
+  else         { sW=img.naturalWidth;  sH=sW/cr; sx=0; sy=(img.naturalHeight-sH)/2; }
+  ctx.drawImage(img, sx,sy,sW,sH, 0,0,sw,sh);
+  gaussianBlur(ctx, sw, sh, 3);
+  const id = ctx.getImageData(0,0,sw,sh);
+  const d  = id.data;
+  for (let i=0;i<d.length;i+=4) {
+    const gray = 0.299*d[i] + 0.587*d[i+1] + 0.114*d[i+2];
+    const mix  = 0.15;
+    d[i]  = d[i]  * (1-mix) + gray*mix + 8;
+    d[i+1]= d[i+1]*(1-mix) + gray*mix + 8;
+    d[i+2]= d[i+2]*(1-mix) + gray*mix + 8;
+  }
+  ctx.putImageData(id,0,0);
+  canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;image-rendering:auto;';
+  wrap.classList.add('visible');
+}
+
+/* Auto-render blur for all photo slides that have an img src on load */
+// ── HOW TO USE ──
+// 개발자는 각 <img id="pi0"> ~ <img id="pi4"> 의 src 속성에
+// 이미지 경로를 넣으면 자동으로 블러가 적용됩니다.
+// 캡션은 .photo-caption-title / .photo-caption-desc 텍스트를 직접 수정하세요.
+// 예: <img id="pi0" src="./images/team-01.jpg" alt="팀 회의">
+document.addEventListener('DOMContentLoaded', () => {
+  for (let i = 0; i < 5; i++) {
+    const img = document.getElementById('pi' + i);
+    if (!img || !img.src || img.src === window.location.href) continue;
+    if (img.complete && img.naturalWidth > 0) {
+      renderBlurredPhoto(img, 'pc' + i, 'pcw' + i);
+    } else {
+      img.addEventListener('load', () => renderBlurredPhoto(img, 'pc' + i, 'pcw' + i));
+    }
+  }
+});
+</script>
+</body>
+</html>
